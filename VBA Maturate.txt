@@ -1,0 +1,134 @@
+
+Sub Button4_Click()
+
+Dim dtbConn As ADODB.Connection
+Dim dtbData As ADODB.Recordset
+Dim dtbData2 As ADODB.Recordset
+Dim dtbData3 As ADODB.Recordset
+Dim dtbData4 As ADODB.Recordset
+Dim dtbData5 As ADODB.Recordset
+Dim dtbData6 As ADODB.Recordset
+
+Set dtbConn = New ADODB.Connection
+Set dtbData = New ADODB.Recordset
+Set dtbData2 = New ADODB.Recordset
+Set dtbData3 = New ADODB.Recordset
+Set dtbData4 = New ADODB.Recordset
+Set dtbData5 = New ADODB.Recordset
+Set dtbData6 = New ADODB.Recordset
+
+dtbConn.ConnectionString = _
+"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\SSM\Documents\Database1.accdb;Persist Security Info=False;"
+dtbConn.Open
+
+Workbooks.Add
+
+Sheets("Sheet1").Name = "Tomahawk"
+
+With dtbData
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM Tomahawk"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData
+
+dtbData.Close
+
+With dtbData2
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM TBone"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Sheets.Add After:=Sheets("Tomahawk")
+Sheets("Sheet2").Name = "T-Bone"
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData2
+
+dtbData2.Close
+
+With dtbData3
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM Antricot_cu_Os"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Sheets.Add After:=Sheets("T-Bone")
+Sheets("Sheet3").Name = "Antricot cu Os"
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData3
+
+dtbData3.Close
+
+With dtbData4
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM Antricot_fara_Os"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Sheets.Add After:=Sheets("Antricot cu Os")
+Sheets("Sheet4").Name = "Antricot fara Os"
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData4
+
+dtbData4.Close
+
+With dtbData5
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM Muschi"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Sheets.Add After:=Sheets("Antricot fara Os")
+Sheets("Sheet5").Name = "Muschi"
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData5
+
+dtbData5.Close
+
+With dtbData6
+    .ActiveConnection = dtbConn
+    .Source = "SELECT * FROM Vrabioara"
+    .LockType = adLockOptimistic
+    .CursorType = adOpenForwardOnly
+    .Open
+End With
+
+Sheets.Add After:=Sheets("Muschi")
+Sheets("Sheet6").Name = "Vrabioara"
+
+Range("A1") = "ID"
+Range("B1") = "Lot"
+Range("C1") = "Cantitate"
+Range("A2").CopyFromRecordset dtbData6
+
+dtbData6.Close
+
+dtbConn.Close
+End Sub
